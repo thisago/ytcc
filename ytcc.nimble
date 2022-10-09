@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.1.0"
+version       = "0.2.0"
 author        = "Thiago Navarro"
 description   = "CLI tool to get Youtube video captions (with chapters)"
 license       = "MIT"
