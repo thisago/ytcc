@@ -26,7 +26,7 @@ proc main(video: seq[string]; lang = "en"; markdown = true) =
   let
     cc = url.extractCaptions.texts.captionsBySeconds
     chapters = parseChapters vid.description
-  if chapters[0].second == 0:
+  if chapters.len > 0 and chapters[0].second == 0:
       if markdown:
         echo fmt"## {chapters[0].name}"
       else:
