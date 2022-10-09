@@ -28,6 +28,11 @@ proc main(video: seq[string]; lang = "en"; html = true) =
     chapters = parseChapters vid.description
   if html:
     echo fmt"""<h1><a href="{videoUrl}">{vid.title}</a></h1>"""
+    echo fmt"""<ul>
+      <li>Channel: {vid.channel.name}</li>
+      <li>Likes: {vid.likes}</li>
+      <li>Description: {vid.description}</li>
+    </ul>"""
   if chapters.len > 0 and chapters[0].second == 0:
       if html:
         echo fmt"<h2>{chapters[0].name}</h2>"
