@@ -36,7 +36,7 @@ proc main(video: seq[string]; lang = "en"; html = true) =
   for c in cc:
     for chapter in chapters:
       if chapter.second > 0 and chapter.second == c.second:
-        if markdown:
+        if html:
           echo fmt"<h2>{chapters[0].name}</h2>"
         else:
           echo chapter.name
@@ -48,16 +48,3 @@ proc main(video: seq[string]; lang = "en"; html = true) =
 when isMainModule:
   import pkg/cligen
   dispatch main
-
-
-
-
-
-
-
-
-
-
-
-
-
