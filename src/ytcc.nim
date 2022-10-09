@@ -9,7 +9,7 @@ proc main(video: seq[string]; lang = "en"; markdown = true) =
     quit "Provide ONE video"
   let
     vid = extractVideo video[0]
-    videoUrl = fmt"https://youtu.be/{vid.id}?t"
+    videoUrl = fmt"https://youtu.be/{vid.id}"
   if vid.status.error != ExtractError.None:
     quit "Error: " & $vid.status.error
   var url = ""
@@ -26,6 +26,8 @@ proc main(video: seq[string]; lang = "en"; markdown = true) =
   let
     cc = url.extractCaptions.texts.captionsBySeconds
     chapters = parseChapters vid.description
+  if markdown:
+    echo fmt"# [{vid.name}]({videoUrl})"
   if chapters.len > 0 and chapters[0].second == 0:
       if markdown:
         echo fmt"## {chapters[0].name}"
@@ -39,7 +41,7 @@ proc main(video: seq[string]; lang = "en"; markdown = true) =
         else:
           echo chapter.name
     if markdown:
-      echo fmt"[{c.text}]({videoUrl}={c.second})"
+      echo fmt"[{c.text}]({videoUrl}?t={c.second})"
     else:
       echo c.text
 
