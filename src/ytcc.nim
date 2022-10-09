@@ -40,7 +40,7 @@ proc main(video: seq[string]; lang = "en"; html = true) =
           echo fmt"<h2>{chapters[0].name}</h2>"
         else:
           echo chapter.name
-    if markdown:
+    if html:
       echo fmt"""<a href="{videoUrl}?t={c.second}">{c.text}</a>"""
     else:
       echo c.text
