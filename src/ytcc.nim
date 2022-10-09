@@ -3,7 +3,7 @@ from std/strformat import fmt
 from pkg/ytextractor import extractVideo, extractCaptions, captionsBySeconds,
                               ExtractError, parseChapters
 
-proc main(video: seq[string]; lang = "en"; html = true) =
+proc main(video: seq[string]; lang = "en"; html = false) =
   ## A CLI tool to get the Youtube video transcript with chapters
   if video.len != 1:
     quit "Provide ONE video"
