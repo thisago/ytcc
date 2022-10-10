@@ -21,7 +21,7 @@ proc main(video: seq[string]; lang = "en"; html = false) =
     elif not html:
       echo fmt"- {capt.langCode}"
   if url.len == 0:
-    echo fmt"Fallback caption: {vid.captions[0].langCode}"
+    if not html: echo fmt"Fallback caption: {vid.captions[0].langCode}"
     url = vid.captions[0].url
   let
     cc = url.extractCaptions.texts.captionsBySeconds
