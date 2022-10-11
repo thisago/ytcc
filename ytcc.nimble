@@ -1,16 +1,18 @@
 # Package
 
-version       = "0.2.0"
+version       = "1.0.0"
 author        = "Thiago Navarro"
-description   = "CLI tool to get Youtube video captions (with chapters)"
+description   = "CLI tool and lib to get Youtube video captions (with chapters)"
 license       = "MIT"
 srcDir        = "src"
 bin           = @["ytcc"]
 binDir = "build"
 
+installExt = @["nim"]
 
 # Dependencies
 
 requires "nim >= 1.6.4"
 requires "ytextractor"
 requires "cligen"
+requires "util"

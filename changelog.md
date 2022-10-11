@@ -1,5 +1,12 @@
 # Changelog 
 
+## Version 1.0.0 (Oct 11, 2022)
+
+- Transformed this in a module too
+- Added option to disable language listing
+
+---
+
 ## Version 0.2.0 (Oct 9, 2022)
 
 - Fixes
