@@ -1,5 +1,6 @@
 from std/strformat import fmt
 from std/strutils import replace
+from std/times import `$`
 
 from pkg/ytextractor import extractVideo, extractCaptions, captionsBySeconds,
                               ExtractError, parseChapters, YoutubeVideo
