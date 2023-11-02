@@ -1,4 +1,8 @@
-# Changelog 
+# Changelog
+
+## Version 1.0.1 (02/11/2023)
+
+- Updated minimum version of `ytextractor` to 1.1.1.
 
 ## Version 1.0.0 (Oct 11, 2022)
 
