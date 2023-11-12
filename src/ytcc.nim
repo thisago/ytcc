@@ -1,16 +1,38 @@
 from std/strformat import fmt
 from std/strutils import replace
-from std/times import `$`
+import std/times
+import std/json
+# import std/jsonutils
 
 from pkg/ytextractor import extractVideo, extractCaptions, captionsBySeconds,
-                              ExtractError, parseChapters, YoutubeVideo
+                              ExtractError, parseChapters, YoutubeVideo,
+                              YoutubeCaptionTextSeconds, YoutubeVideoChapters,
+                              YoutubeVideoId, `$`
 from pkg/util/forStr import secToTimestamp
 
 type
   ExtractedCc* = tuple
     err, html, text: string
+    data: ExtractedData
     vid: YoutubeVideo
     availableLangs: seq[string]
+  ExtractedData* = object
+    videoUrl: string
+    vid: YoutubeVideo
+    chapters: YoutubeVideoChapters
+    cc: YoutubeCaptionTextSeconds
+
+proc `%`*(d: proc (x: Time): ZonedTime): JsonNode =
+  %"proc (x: Time): ZonedTime"
+
+proc `%`*[T: DateTime or YoutubeVideoId](v: T): JsonNode =
+  % $v
+
+proc `%`*(v: tuple[second: int, name: string]): JsonNode =
+  %*{
+    "second": %v.second,
+    "name": %v.name
+  }
 
 proc extractCc*(video: string; lang = "en"): ExtractedCc =
   ## Get the Youtube video transcript with chapters
@@ -32,6 +54,11 @@ proc extractCc*(video: string; lang = "en"): ExtractedCc =
   let
     cc = url.extractCaptions.texts.captionsBySeconds
     chapters = parseChapters vid.description
+
+  result.data.videoUrl = videoUrl
+  result.data.vid = vid
+  result.data.chapters = chapters
+  result.data.cc = cc
 
   result.html.add fmt"""<h1><a href="{videoUrl}">{vid.title}</a></h1>"""
   result.html.add fmt"""<img src="{vid.thumbnails[^1].url}">"""
@@ -56,7 +83,11 @@ proc extractCc*(video: string; lang = "en"): ExtractedCc =
     result.html.add fmt"""<a href="{videoUrl}?t={c.second}">{c.text}</a><br>"""
     result.text.add secToTimestamp(c.second) & ": " & c.text & "\l"
 
-proc main(video: seq[string]; lang = "en"; html = false; showLangs = true) =
+type
+  ResultKind {.pure.} = enum
+    Text, Html, Json
+
+proc main(video: seq[string]; lang = "en"; resKind = Text; showLangs = true) =
   ## A CLI tool to get the Youtube video transcript with chapters
   if video.len != 1:
     quit "Provide ONE video"
@@ -65,8 +96,10 @@ proc main(video: seq[string]; lang = "en"; html = false; showLangs = true) =
     for l in res.availableLangs:
       let selected = if lang == l: " <-" else: ""
       echo fmt"- {l}{selected}"
-  if html: echo res.html
-  else: echo res.text
+  case resKind
+    of Text: echo res.text
+    of Html: echo res.html
+    of Json: echo $(%*res.data)
 
 when isMainModule:
   import pkg/cligen

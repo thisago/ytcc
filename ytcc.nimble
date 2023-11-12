@@ -1,6 +1,6 @@
 # Package
 
-version       = "1.0.1"
+version       = "1.1.0"
 author        = "Thiago Navarro"
 description   = "CLI tool and lib to get Youtube video captions (with chapters)"
 license       = "MIT"
@@ -13,6 +13,7 @@ installExt = @["nim"]
 # Dependencies
 
 requires "nim >= 1.6.4"
-requires "ytextractor >= 1.1.1"
 requires "cligen"
+
+requires "ytextractor >= 1.1.1"
 requires "util"

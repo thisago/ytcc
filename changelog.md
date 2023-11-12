@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 1.1.0 (12/11/2023)
+
+- Added JSON output
+
 ## Version 1.0.1 (02/11/2023)
 
 - Updated minimum version of `ytextractor` to 1.1.1.
